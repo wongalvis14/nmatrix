@@ -313,7 +313,11 @@ describe "Slice operation" do
           context "operations" do
 
             it "correctly transposes slices" do
+              require 'pry'
+              binding.pry
               expect(@m[0...3,0].transpose).to eq NMatrix[[0, 3, 6]]
+              expect(@m[0...3,1].transpose).to eq NMatrix[[1, 4, 7]]
+              expect(@m[0...3,2].transpose).to eq NMatrix[[2, 5, 8]]
             end
 
             it "adds slices" do

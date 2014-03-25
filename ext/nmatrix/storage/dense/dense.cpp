@@ -739,6 +739,7 @@ void nm_dense_storage_coords(const DENSE_STORAGE* s, const size_t slice_pos, siz
   size_t temp_pos = slice_pos;
 
   for (size_t i = 0; i < s->dim; ++i) {
+    std::cerr << i << ": temp_pos=" << temp_pos << "\tstride[i]=" << s->stride[i] << "\toffset[i]=" << s->offset[i] << std::endl;
     coords_out[i] = (temp_pos - temp_pos % s->stride[i])/s->stride[i] - s->offset[i];
     temp_pos = temp_pos % s->stride[i];
   }
@@ -923,8 +924,10 @@ void ref_slice_copy_transposed(const DENSE_STORAGE* rhs, DENSE_STORAGE* lhs) {
 
   while (count-- > 0) {
     nm_dense_storage_coords(lhs, count, temp_coords);
+    std::cerr << "count=" << count << "\ttemp[0]=" << temp_coords[0] << "," << temp_coords[1] << '\t';
     NM_SWAP(temp_coords[0], temp_coords[1], coord_swap_temp);
     size_t r_coord = nm_dense_storage_pos(rhs, temp_coords);
+    std::cerr << "r_coord=" << r_coord << std::endl;
     lhs_els[count] = rhs_els[r_coord];
   }
 
